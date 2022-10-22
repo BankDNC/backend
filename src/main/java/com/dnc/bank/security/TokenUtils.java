@@ -5,10 +5,12 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Date;
 
+@Component
 public class TokenUtils {
 
     private final static String ACCESS_TOKEN_SECRET = "TESTTESTTESTTESTTESTTESTTESTTESTTEST";
@@ -48,7 +50,7 @@ public class TokenUtils {
         }
     }
 
-    public static String getEmail(String token) {
+    public String getEmail(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())

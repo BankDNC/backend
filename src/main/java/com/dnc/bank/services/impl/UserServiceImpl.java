@@ -10,8 +10,6 @@ import com.dnc.bank.models.response.UserResponse;
 import com.dnc.bank.repositories.UserRepository;
 import com.dnc.bank.security.TokenUtils;
 import com.dnc.bank.services.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private TokenUtils tokenUtils;
 
     @Override
     public UserResponse register(UserRequest userRequest) {
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public InfoResponse info(String token) {
         token = token.replace("Bearer ", "");
-        String email = TokenUtils.getEmail(token);
+        String email = tokenUtils.getEmail(token);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         InfoResponse infoResponse = new InfoResponse();

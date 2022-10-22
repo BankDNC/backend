@@ -12,8 +12,4 @@ public class StatusController {
         return "OK";
     }
 
-    @GetMapping("/status/token")
-    public String statusToken() {
-        return "OK";
-    }
 }
