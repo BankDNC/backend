@@ -13,6 +13,8 @@ import com.dnc.bank.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.dnc.bank.exceptions.ExceptionConstant.*;
+
 
 @Service
 @AllArgsConstructor
@@ -35,7 +37,7 @@ public class UserServiceImpl implements UserService {
         token = token.replace("Bearer ", "");
         String email = tokenUtils.getEmail(token);
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND));
         InfoResponse infoResponse = new InfoResponse();
 
         infoResponse.setUserResponse(UserMapper.toUserResponse(user));
@@ -46,11 +48,11 @@ public class UserServiceImpl implements UserService {
 
     private void validRegister(UserRequest userRequest) {
         if(userRepository.existsByEmail(userRequest.getEmail())){
-            throw new EmailExistException("El correo ya se encuentra registrado");
+            throw new EmailExistException(EMAIL_EXIST);
         }
 
         if(userRepository.existsByNit(userRequest.getNit())){
-            throw new NitExistException("El nit ya se encuentra registrado");
+            throw new NitExistException(NIT_EXIST);
         }
     }
 }

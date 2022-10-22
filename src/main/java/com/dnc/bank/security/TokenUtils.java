@@ -13,8 +13,8 @@ import java.util.Date;
 @Component
 public class TokenUtils {
 
-    private final static String ACCESS_TOKEN_SECRET = "TESTTESTTESTTESTTESTTESTTESTTESTTEST";
-    private final static Long ACCESS_TOKEN_VALIDITY_SECONDS = 86_400L;
+    private static final String ACCESS_TOKEN_SECRET = "TESTTESTTESTTESTTESTTESTTESTTESTTEST";
+    private static final Long ACCESS_TOKEN_VALIDITY_SECONDS = 86_400L;
 
     public static String createToken(String email) {
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
