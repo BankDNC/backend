@@ -1,6 +1,7 @@
 package com.dnc.bank.services.impl;
 
 import com.dnc.bank.exceptions.EmailExistException;
+import com.dnc.bank.exceptions.NitExistException;
 import com.dnc.bank.models.documents.User;
 import com.dnc.bank.models.mappers.UserMapper;
 import com.dnc.bank.models.request.UserRequest;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if(userRepository.existsByNit(userRequest.getNit())){
-            throw new EmailExistException("El nit ya se encuentra registrado");
+            throw new NitExistException("El nit ya se encuentra registrado");
         }
     }
 }

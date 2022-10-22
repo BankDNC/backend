@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  backend-bank:
+    container_name: backend-bank
+    #build:
+    #    context: ./
+    #    dockerfile: ./Dockerfile
+    image: backend-bank
+    ports:
+      - "8100:8100"
+    networks:
+      - bank
+    restart: always
