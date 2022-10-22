@@ -5,12 +5,16 @@ import com.dnc.bank.exceptions.NitExistException;
 import com.dnc.bank.models.documents.User;
 import com.dnc.bank.models.mappers.UserMapper;
 import com.dnc.bank.models.request.UserRequest;
+import com.dnc.bank.models.response.InfoResponse;
 import com.dnc.bank.models.response.UserResponse;
 import com.dnc.bank.repositories.UserRepository;
+import com.dnc.bank.security.TokenUtils;
 import com.dnc.bank.services.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @AllArgsConstructor
@@ -25,6 +29,20 @@ public class UserServiceImpl implements UserService {
         User userDocument = UserMapper.toUser(userRequest);
         User user = userRepository.save(userDocument);
         return UserMapper.toUserResponse(user);
+    }
+
+    @Override
+    public InfoResponse info(String token) {
+        token = token.replace("Bearer ", "");
+        String email = TokenUtils.getEmail(token);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        InfoResponse infoResponse = new InfoResponse();
+
+        infoResponse.setUserResponse(UserMapper.toUserResponse(user));
+
+        return infoResponse;
+
     }
 
     private void validRegister(UserRequest userRequest) {
