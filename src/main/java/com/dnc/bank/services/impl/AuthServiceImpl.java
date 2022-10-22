@@ -1,5 +1,6 @@
 package com.dnc.bank.services.impl;
 
+import com.dnc.bank.exceptions.CredentialException;
 import com.dnc.bank.models.request.AuthRequest;
 import com.dnc.bank.models.response.AuthResponse;
 import com.dnc.bank.security.TokenUtils;
@@ -8,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
+import static com.dnc.bank.exceptions.ExceptionConstant.INVALID_CREDENTIALS;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
             String token = TokenUtils.createToken(authRequest.getEmail());
             return new AuthResponse(token);
         }catch (Exception e){
-            return new AuthResponse();
+            throw new CredentialException(INVALID_CREDENTIALS);
         }
     }
 }

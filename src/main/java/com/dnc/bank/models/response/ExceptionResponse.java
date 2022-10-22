@@ -1,4 +1,4 @@
-package com.dnc.bank.exceptions;
+package com.dnc.bank.models.response;
 
 import lombok.Getter;
 

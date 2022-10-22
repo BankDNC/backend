@@ -12,18 +12,18 @@ import javax.validation.constraints.Size;
 @Getter
 @Builder
 public class UserRequest {
-    @NotEmpty
+    @NotEmpty(message = "El nombre no puede ser vacío")
     private String name;
-    @NotEmpty
+    @NotEmpty(message = "El apellido no puede ser vacío")
     private String lastName;
-    @Email
+    @Email(message = "El correo electrónico no es válido")
     private String email;
     @Size(min = 8)
     private String password;
-    @NotNull
+    @NotNull(message = "El tipo de NIT no puede ser vacío")
     private TypeNit typeNit;
-    @NotEmpty
+    @NotEmpty(message = "El NIT no puede ser vacío")
     private String nit;
-    @NotEmpty
+    @NotEmpty(message = "El teléfono no puede ser vacío")
     private String phone;
 }
