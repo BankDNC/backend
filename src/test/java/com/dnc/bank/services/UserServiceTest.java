@@ -6,7 +6,10 @@ import com.dnc.bank.exceptions.NitExistException;
 import com.dnc.bank.models.documents.User;
 import com.dnc.bank.models.request.UserRequest;
 import com.dnc.bank.repositories.UserRepository;
+import com.dnc.bank.security.TokenUtils;
 import com.dnc.bank.services.impl.UserServiceImpl;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,12 +18,16 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private TokenUtils tokenUtils;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -37,7 +44,6 @@ class UserServiceTest {
         when(userRepository.save(Mockito.any())).thenReturn(generateUser());
 
         assertNotNull(userService.register(generateUserRequest()));
-
     }
 
     @Test
@@ -55,6 +61,15 @@ class UserServiceTest {
 
         assertThrows(NitExistException.class, () -> userService.register(generateUserRequest()));
 
+    }
+
+    @Test
+    void getInfo(){
+        when(tokenUtils.getEmail(Mockito.anyString())).thenReturn("test");
+        when(userRepository.findByEmail(Mockito.any()))
+                .thenReturn(java.util.Optional.of(generateUser()));
+
+        assertNotNull(userService.info("token"));
     }
 
     private UserRequest generateUserRequest() {

@@ -120,6 +120,7 @@
 						<exclude>**/models/**</exclude>
 						<exclude>**/exceptions/**</exclude>
 						<exclude>**/catalogs/**</exclude>
+						<exclude>**/security/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
