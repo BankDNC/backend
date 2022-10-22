@@ -1,27 +1,29 @@
 package com.dnc.bank.services.impl;
 
 import com.dnc.bank.exceptions.EmailExistException;
+import com.dnc.bank.exceptions.NitExistException;
 import com.dnc.bank.models.documents.User;
 import com.dnc.bank.models.mappers.UserMapper;
 import com.dnc.bank.models.request.UserRequest;
 import com.dnc.bank.models.response.UserResponse;
 import com.dnc.bank.repositories.UserRepository;
 import com.dnc.bank.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
 
     @Override
     public UserResponse register(UserRequest userRequest) {
         validRegister(userRequest);
 
-        User userDocumenmt = UserMapper.toUser(userRequest);
-        User user = userRepository.save(userDocumenmt);
+        User userDocument = UserMapper.toUser(userRequest);
+        User user = userRepository.save(userDocument);
         return UserMapper.toUserResponse(user);
     }
 
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if(userRepository.existsByNit(userRequest.getNit())){
-            throw new EmailExistException("El nit ya se encuentra registrado");
+            throw new NitExistException("El nit ya se encuentra registrado");
         }
     }
 }
