@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/v1/user")
+=======
+@RequestMapping("/v1/usuario")
+>>>>>>> feature/S024
 public class UserController {
 
     @Autowired
