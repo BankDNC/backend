@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/usuario")
-public class UsuarioController {
+@RequestMapping("/v1/user")
+public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@Valid @RequestBody UserRequest user){
         return ResponseEntity.ok(userService.register(user));
     }
