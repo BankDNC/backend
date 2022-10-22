@@ -72,6 +72,15 @@ class UserServiceTest {
         assertNotNull(userService.info("token"));
     }
 
+    @Test
+    void getInfoThrow(){
+        when(tokenUtils.getEmail(Mockito.anyString())).thenReturn("test");
+        when(userRepository.findByEmail(Mockito.any()))
+                .thenReturn(java.util.Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> userService.info("token"));
+    }
+
     private UserRequest generateUserRequest() {
         return UserRequest.builder()
                 .name("name")
