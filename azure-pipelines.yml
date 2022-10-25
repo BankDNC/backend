@@ -23,5 +23,5 @@ steps:
   displayName: 'Testing'
     
 - script: |
-    mvn clean install -DskipTests
-  displayName: 'mvn clean install'
+    mvn clean package -DskipTests
+  displayName: 'mvn clean package'
