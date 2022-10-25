@@ -22,15 +22,6 @@ steps:
     goals: 'test'
   displayName: 'Testing'
     
-- steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean install -DskipTests'
+- script: |
+    mvn clean install -DskipTests
   displayName: 'mvn clean install'
