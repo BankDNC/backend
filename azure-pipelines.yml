@@ -25,3 +25,21 @@ steps:
 - script: |
     mvn clean package -DskipTests
   displayName: 'mvn clean package'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: 'tarjet/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+    includeRootFolder: true
+    archiveType: zip
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
