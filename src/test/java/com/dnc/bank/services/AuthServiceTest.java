@@ -1,5 +1,6 @@
 package com.dnc.bank.services;
 
+import com.dnc.bank.exceptions.CredentialException;
 import com.dnc.bank.models.request.AuthRequest;
 import com.dnc.bank.services.impl.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +36,7 @@ public class AuthServiceTest {
     @Test
     void loginIsNotOk(){
         when(authenticationManager.authenticate(any())).thenThrow(new RuntimeException());
-        assertNull(authService.login(generateAuthRequest()).getToken());
+        assertThrows(CredentialException.class, () -> authService.login(generateAuthRequest()));
     }
 
     private AuthRequest generateAuthRequest() {
