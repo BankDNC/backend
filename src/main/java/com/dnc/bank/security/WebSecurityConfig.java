@@ -31,9 +31,9 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 // status api
-                .antMatchers(HttpMethod.GET, "/","/status").permitAll()
+                .antMatchers(HttpMethod.GET, "/api","/api/status").permitAll()
                 // login
-                .antMatchers(HttpMethod.POST, "/v1/user/register", "/v1/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/user/register", "/api/v1/auth/login").permitAll()
                 // swagger
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
