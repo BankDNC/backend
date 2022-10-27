@@ -1,5 +1,6 @@
 package com.dnc.bank.controllers;
 
+import com.dnc.bank.models.response.StatusResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,18 +13,22 @@ public class StatusController {
 
     @GetMapping
     @ApiOperation(value = "Get status of the application",
-            response = String.class)
+            response = StatusResponse.class)
     @ApiResponse(code = 200, message = "Successfully retrieved status")
-    public String statusBase() {
-        return "OK";
+    public StatusResponse statusBase() {
+        return getOk();
     }
 
     @GetMapping("/status")
     @ApiOperation(value = "Get status of the application",
-            response = String.class)
+            response = StatusResponse.class)
     @ApiResponse(code = 200, message = "Successfully retrieved status")
-    public String status() {
-        return "OK";
+    public StatusResponse status() {
+        return getOk();
+    }
+
+    private static StatusResponse getOk() {
+        return StatusResponse.builder().message("OK").build();
     }
 
 }
