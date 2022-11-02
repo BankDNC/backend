@@ -13,7 +13,6 @@ public class UserMapper {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
     public User toUser(UserRequest userRequest) {
         return User.builder()
                 .name(userRequest.getName())
