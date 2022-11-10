@@ -4,9 +4,7 @@ import com.dnc.bank.catalogs.TypeNit;
 import com.dnc.bank.exceptions.EmailExistException;
 import com.dnc.bank.exceptions.NitExistException;
 import com.dnc.bank.models.documents.User;
-import com.dnc.bank.models.mappers.UserMapper;
 import com.dnc.bank.models.request.UserRequest;
-import com.dnc.bank.models.response.UserResponse;
 import com.dnc.bank.repositories.UserRepository;
 import com.dnc.bank.security.TokenUtils;
 import com.dnc.bank.services.impl.UserServiceImpl;
@@ -20,23 +18,23 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
     @Mock
     private TokenUtils tokenUtils;
-    @Mock
-    private UserMapper userMapper;
 
     @InjectMocks
     private UserServiceImpl userService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -44,18 +42,8 @@ class UserServiceTest {
         when(userRepository.existsByEmail(Mockito.anyString())).thenReturn(false);
         when(userRepository.existsByNit(Mockito.anyString())).thenReturn(false);
         when(userRepository.save(Mockito.any())).thenReturn(generateUser());
-        when(userMapper.toUser(Mockito.any())).thenReturn(generateUser());
-        when(userMapper.toUserResponse(Mockito.any())).thenReturn(generateUserResponse());
 
         assertNotNull(userService.register(generateUserRequest()));
-    }
-
-    private UserResponse generateUserResponse() {
-        return UserResponse.builder()
-                .id("1")
-                .name("name")
-                .email("email")
-                .build();
     }
 
     @Test

@@ -22,15 +22,14 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private TokenUtils tokenUtils;
-    private UserMapper userMapper;
 
     @Override
     public UserResponse register(UserRequest userRequest) {
         validRegister(userRequest);
 
-        User userDocument = userMapper.toUser(userRequest);
+        User userDocument = UserMapper.toUser(userRequest);
         User user = userRepository.save(userDocument);
-        return userMapper.toUserResponse(user);
+        return UserMapper.toUserResponse(user);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND));
         InfoResponse infoResponse = new InfoResponse();
 
-        infoResponse.setUserResponse(userMapper.toUserResponse(user));
+        infoResponse.setUserResponse(UserMapper.toUserResponse(user));
 
         return infoResponse;
 
