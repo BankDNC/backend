@@ -37,7 +37,6 @@ public class WebSecurityConfig {
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
 
         return http
-                .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
                 // status api
