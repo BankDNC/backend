@@ -38,7 +38,8 @@ public class WebSecurityConfig {
 
         return http
                 .cors(withDefaults())
-                .csrf().disable()
+                //.csrf().disable()
+                .cors().disable()
                 .authorizeRequests()
                 // status api
                 .antMatchers(HttpMethod.GET, "/api","/api/status").permitAll()
